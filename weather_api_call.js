@@ -87,7 +87,7 @@ function createForcastObj(raw_data){
         //"temp": raw_data.daily[i - 1].main.temp,
         "rainfall_level": raw_data.daily[i - 1].rain,
         "windspeed": raw_data.daily[i - 1].wind_speed,
-       "weather_type": "",
+       "weather_type": "unknown",
        "wear_mask" : null
     };
   }
