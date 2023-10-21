@@ -32,14 +32,13 @@ async function getWeatherForecastDaily(city) {
     }
 
   forecastData = await response.json();
-  console.log(forecastData)
+  //console.log(forecastData)
   } 
   catch (error) {
     console.error('Error fetching weather forecast data:', error);
   }
   // clean the data and create an object with desired data points
   const cleaned_data = createForcastObj(forecastData); 
-  
   // set the name of the city and country in the data
   cleaned_data.city = city;
   cleaned_data.country = country;
@@ -86,6 +85,7 @@ function createForcastObj(raw_data){
   const forecast = {
     "city": "blank",
     //"country": "blank",
+    "bring_umbrella": false,
     "lon": raw_data.lon,
     "lat": raw_data.lat,
     days: {}
@@ -96,15 +96,18 @@ function createForcastObj(raw_data){
   for (let i = 1; i <= 6; i++) {
     const type = getCategorization(raw_data.daily[i - 1].temp.day)
     const date = unixTimeToReadableDate(raw_data.daily[i - 1].dt)
+    const rainfall_level = raw_data.daily[i - 1].rain;
+    const bring_umbrella = rainfall_level && rainfall_level > 0; // Check if rainfall_level is present and greater than 0
     days[`day_${i}`] = {
         "unix_dt": raw_data.daily[i - 1].dt, // TODO -> convert this into a presentable date format
         "formated_date" : date,
         "temp": raw_data.daily[i - 1].temp.day,
-        "rainfall_level": raw_data.daily[i - 1].rain,
+        "rainfall_level": rainfall_level,
         "windspeed": raw_data.daily[i - 1].wind_speed,
        "weather_type": type,
        "wear_mask" : null
     };
+    if(bring_umbrella) forecast.bring_umbrella = true;
   }
   forecast.days = days;
 

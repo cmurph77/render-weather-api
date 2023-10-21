@@ -166,6 +166,7 @@ app.get('/weather/:input', async (req, res) => {
 
   try {
     const result = await getdata(input);  // pass the city name to get data and await json object response - this is an object with relevant weather data
+    console.log(result)
     res.json(result);  // Use res.json to send JSON response
   } catch (error) { 
     res.status(500).json({ error: 'Error fetching weather data' }); // handle any error and log them
