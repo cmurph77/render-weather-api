@@ -1,15 +1,13 @@
-const express = require('express');
-//const fetch = require('node-fetch');
+const express = require('express');  //import express to create api endpoints
 
 const { json } = require('body-parser');
 const cors = require('cors'); // Import the cors middleware
-const { getWeatherForecastDaily } = require('./weather_api_call.js');
-
+const { getWeatherForecastDaily } = require('./weather_api_call.js'); // import js file that handled retrieving weather data
 
 const app = express();
-const PORT = process.env.PORT || 8081;
+const PORT = process.env.PORT || 8081;  // expose the port for the api to listen on
 
-app.use(cors()); // Use the cors middleware to enable CORS for all routes
+app.use(cors()); // enable CORS for all routes
 
 
 
@@ -68,6 +66,11 @@ const sample_data= {
            
 
 
+/**
+ * 
+ * @param {*} city The name of the city that weather data is wanted for
+ * @returns json object with all relevent weather adn location data.
+ */
 async function getdata(city) {
   try {
     const result = await getWeatherForecastDaily(city);
@@ -79,94 +82,97 @@ async function getdata(city) {
   }
 }
 
-app.get('/', async (req, res) => {
-  try {
-    const reply = {
-      message :  'great success'
-    }
+// app.get('/', async (req, res) => {
+//   try {
+//     const reply = {
+//       message :  'great success'
+//     }
     
-    res.send(reply);
-  } 
-  catch (error) {
-    res.status(400).send('Error while getting list of repositories');
-  }
-});
+//     res.send(reply);
+//   } 
+//   catch (error) {
+//     res.status(400).send('Error while getting list of repositories');
+//   }
+// });
 
-app.get('/sample', async (req, res) => {
-  try {
-    const reply = {
-      message :  'great success'
-    }
-    console.log("RECIEVED SAMPLE DATA REQUEST")
+// app.get('/sample', async (req, res) => {
+//   try {
+//     const reply = {
+//       message :  'great success'
+//     }
+//     console.log("RECIEVED SAMPLE DATA REQUEST")
     
-    res.send(sample_data);
-  } 
-  catch (error) {
-    res.status(400).send('Error while getting list of repositories');
-  }
-});
+//     res.send(sample_data);
+//   } 
+//   catch (error) {
+//     res.status(400).send('Error while getting list of repositories');
+//   }
+// });
 
-app.get('/sample/:input', async (req, res) => {
-  const input = req.params.input;
-  try {
+// app.get('/sample/:input', async (req, res) => {
+//   const input = req.params.input;
+//   try {
 
-    console.log("RECIEVED SAMPLE DATA REQUEST")
-    sample_data.city = input;
-    res.send(sample_data);
-  } 
-  catch (error) {
-    res.status(400).send('Error while fetching data');
-  }
-});
+//     console.log("RECIEVED SAMPLE DATA REQUEST")
+//     sample_data.city = input;
+//     res.send(sample_data);
+//   } 
+//   catch (error) {
+//     res.status(400).send('Error while fetching data');
+//   }
+// });
 
-app.get('/owm/:input', async (req, res) => { 
-  const input = req.params.input;  
-    console.log("\nRECEIVED WEATHER REQUEST FOR: ",input);
-  const lat = 53.2783
-  const lon = -6.1003
-  const apiKey = '9d54b4134840423050e9a3f21b40dc15'; // Replace with your OpenWeatherMap API key
-  const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,hourly,minutely,alerts&units=metric&appid=${apiKey}`;
-  try {
-    // call the api
-    try {
-      const fetch = await import('node-fetch'); // Use dynamic import
+// app.get('/owm/:input', async (req, res) => { 
+//   const input = req.params.input;  
+//     console.log("\nRECEIVED WEATHER REQUEST FOR: ",input);
+//   const lat = 53.2783
+//   const lon = -6.1003
+//   const apiKey = '9d54b4134840423050e9a3f21b40dc15'; // Replace with your OpenWeatherMap API key
+//   const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,hourly,minutely,alerts&units=metric&appid=${apiKey}`;
+//   try {
+//     // call the api
+//     try {
+//       const fetch = await import('node-fetch'); // Use dynamic import
 
-      const response = await fetch.default(apiUrl); // Use .default to access the imported module
-      console.log('Response Status:', response.status); // Log the response status
+//       const response = await fetch.default(apiUrl); // Use .default to access the imported module
+//       console.log('Response Status:', response.status); // Log the response status
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+//       if (!response.ok) {
+//         throw new Error('Network response was not ok');
+//       }
 
-    forecastData = await response.json();
-    //console.log(forecastData)
-    } 
-    catch (error) {
-      console.error('Error fetching weather forecast data:', error);
-    }
-    res.send(forecastData);
-  } 
-  catch (error) {
-    res.status(400).send('Error while fetching data');
-  }
+//     forecastData = await response.json();
+//     //console.log(forecastData)
+//     } 
+//     catch (error) {
+//       console.error('Error fetching weather forecast data:', error);
+//     }
+//     res.send(forecastData);
+//   } 
+//   catch (error) {
+//     res.status(400).send('Error while fetching data');
+//   }
 
 
-});
+// });
 
+/**
+ * @brief This is a GET enpoint that takes the city name as an input and return the weather data for the city
+ */
 app.get('/weather/:input', async (req, res) => {
-  const input = req.params.input;
+  const input = req.params.input; // extract the city from the get call
   console.log("\nReceived weather forecast request for City:");
   console.log(input);
 
   try {
-    const result = await getdata(input);  // Await the asynchronous function
-    //console.log(JSON.stringify(result, null, 4));
+    const result = await getdata(input);  // pass the city name to get data and await json object response - this is an object with relevant weather data
     res.json(result);  // Use res.json to send JSON response
-  } catch (error) {
-    res.status(500).json({ error: 'Error fetching weather data' });
+  } catch (error) { 
+    res.status(500).json({ error: 'Error fetching weather data' }); // handle any error and log them
   }
 });
 
+// set the API listening on the defined port
 app.listen(PORT, () => {
   console.log(`server started on port ${PORT}`);
 });

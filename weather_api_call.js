@@ -1,7 +1,13 @@
 
-const apiKey = '9d54b4134840423050e9a3f21b40dc15'; // Replace with your OpenWeatherMap API key
+const apiKey = '9d54b4134840423050e9a3f21b40dc15'; // Personal OpenWeatherMap API key
 
-// this function takes a city as a parameter and makes call to api to get weather forcast for that city
+/**
+ * 
+ * @brief this function takes a city as a parameter and makes call to api to get weather forcast for that city
+ * 
+ * @param {*} city the name of the city that you want weather data for 
+ * @returns a json obkect containing all relevant weather data
+ */
 async function getWeatherForecastDaily(city) {
 
 
@@ -32,7 +38,7 @@ async function getWeatherForecastDaily(city) {
     console.error('Error fetching weather forecast data:', error);
   }
   // clean the data and create an object with desired data points
-  const cleaned_data = createForcastObj(forecastData);
+  const cleaned_data = createForcastObj(forecastData); 
   
   // set the name of the city and country in the data
   cleaned_data.city = city;
@@ -41,12 +47,18 @@ async function getWeatherForecastDaily(city) {
   // return the data
   return cleaned_data;
 }
-
+/**
+ * @brief gets the coords and country of the city 
+ * 
+ * @param {*} city 
+ * @returns json object with lat, lon and country that the city is in
+ */
 async function getCityLatLonNew(city) {
   try {
     const fetchModule = await import('node-fetch');
     const fetch = fetchModule.default;
-    const apiKey = '9d54b4134840423050e9a3f21b40dc15'; // Replace with your OpenWeatherMap API key
+
+    const apiKey = '9d54b4134840423050e9a3f21b40dc15'; // OpenWeatherMap API key
 
     const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=${apiKey}`);
 
@@ -55,6 +67,7 @@ async function getCityLatLonNew(city) {
     }
 
     const data = await response.json();
+    // create json object with lat,lon as well as country 
     const coords = {
       lat: data.coord.lat,
       lon: data.coord.lon,
