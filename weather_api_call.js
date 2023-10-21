@@ -121,7 +121,7 @@ function unixTimeToReadableDate(unixTimestamp) {
   const month = months[date.getMonth()];
   const year = date.getFullYear();
 
-  return `${dayOfWeek}, ${day} ${month} ${year}`;
+  return `${dayOfWeek}, ${day} ${month}`;
 }
 
 module.exports = { getWeatherForecastDaily }
