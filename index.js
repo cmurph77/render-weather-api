@@ -80,7 +80,8 @@ app.get('/', async (req, res) => {
     }
     
     res.send(reply);
-  } catch (error) {
+  } 
+  catch (error) {
     res.status(400).send('Error while getting list of repositories');
   }
 });
@@ -93,8 +94,9 @@ app.get('/weather/:input', async (req, res) => {
   try {
     const result = await getdata(input);  // Await the asynchronous function
     //console.log(JSON.stringify(result, null, 4));
-    res.json(result);  // Use res.json to send JSON response
-  } catch (error) {
+    res.send(result);  // Use res.json to send JSON response
+  } 
+  catch (error) {
     res.status(500).json({ error: 'Error fetching weather data' });
   }
 });
