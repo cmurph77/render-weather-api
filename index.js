@@ -2,6 +2,9 @@ const express = require('express');
 const axios = require('axios');
 const app = express();
 const PORT = process.env.PORT || 8081;
+const cors = require('cors'); // Import the cors middleware
+
+app.use(cors()); // Use the cors middleware to enable CORS for all routes
 
 const { getWeatherForecastDaily } = require('./weather_api_call.js');
 
