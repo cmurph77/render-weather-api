@@ -1,12 +1,14 @@
 const express = require('express');
-const axios = require('axios');
+const { json } = require('body-parser');
+const cors = require('cors'); // Import the cors middleware
+const { getWeatherForecastDaily } = require('./weather_api_call.js');
+
+
 const app = express();
 const PORT = process.env.PORT || 8081;
-const cors = require('cors'); // Import the cors middleware
 
 app.use(cors()); // Use the cors middleware to enable CORS for all routes
 
-const { getWeatherForecastDaily } = require('./weather_api_call.js');
 
 
 const sample_data= {
@@ -16,7 +18,7 @@ const sample_data= {
   "days" : {
       "day_one" : {
           "unix_dt": 100000000,
-          "formated_date": "1.12.2023",
+          "formated_date": "1.12.1999",
           "temp": 100 ,
           "rainfall_level": 12,
           "windspeed": 20 ,
@@ -25,7 +27,7 @@ const sample_data= {
       },
       "day_two" :{
           "unix_dt": 20000000,
-          "formated_date": "2.12.2023",
+          "formated_date": "2.12.1999",
           "temp": 23.4 ,
           "rainfall_level": 12,
           "windspeed": 20 ,
@@ -34,7 +36,7 @@ const sample_data= {
       },
       "day_three": {
           "unix_dt": 3000000,
-          "formated_date": "3.12.2023",
+          "formated_date": "3.12.1999",
           "temp": 23.4 ,
           "rainfall_level": 12,
           "windspeed": 20 ,
@@ -43,7 +45,7 @@ const sample_data= {
       },
       "day_four":{
           "unix_dt": 4000000,
-          "formated_date": "4.12.2023",
+          "formated_date": "4.12.1999",
           "temp": 23.4 ,
           "rainfall_level": 12,
           "windspeed": 20 ,
@@ -52,7 +54,7 @@ const sample_data= {
       },
       "day_five": {
           "unix_dt": 5000000,
-          "formated_date": "5.12.2023",
+          "formated_date": "5.12.1999",
           "temp": 23.4 ,
           "rainfall_level": 12,
           "windspeed": 20 ,

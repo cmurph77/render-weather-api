@@ -25,6 +25,7 @@ async function getWeatherForecastDaily(city) {
     }
 
   forecastData = await response.json();
+  console.log(forecastData)
   } 
   catch (error) {
     console.error('Error fetching weather forecast data:', error);
@@ -60,22 +61,26 @@ function getCityLatLon(city) {
 function createForcastObj(raw_data){
   const forecast = {
     "city": "blank",
-    "country": "blank",
-    "lat": raw_data.lat,
+    //"country": "blank",
     "lon": raw_data.lon,
+    "lat": raw_data.lat,
+    days: {}
   };
+  const days = {};
 
   // populate the forcast data points for the next 6 days. ( today + next 5)
   for (let i = 1; i <= 6; i++) {
-    forecast[`day_${i}`] = {
+    days[`day_${i}`] = {
         "unix_dt": raw_data.daily[i - 1].dt, // TODO -> convert this into a presentable date format
+        "formated_date" : "Incomplete ",
        //"temp": raw_data.daily[i - 1].main.temp,
-       // "windspeed": raw_data.daily[i - 1].wind.speed,
+       //"windspeed": raw_data.daily[i - 1].wind.speed,
        //"weather-type": raw_data.daily[i - 1].weather.main,
        //"weather-description": raw_data.daily[i - 1].weather.description,
        // "rain": raw_data.daily[i - 1].rain
     };
   }
+  forecast.days = days;
 
   return forecast;
 
