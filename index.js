@@ -1,5 +1,5 @@
 const express = require('express');
-const fetch = require('node-fetch');
+//const fetch = require('node-fetch');
 
 const { json } = require('body-parser');
 const cors = require('cors'); // Import the cors middleware
@@ -130,7 +130,9 @@ app.get('/owm/:input', async (req, res) => {
   try {
     // call the api
     try {
-      const response = await fetch(apiUrl);
+      const fetch = await import('node-fetch'); // Use dynamic import
+
+      const response = await fetch.default(apiUrl); // Use .default to access the imported module
       console.log('Response Status:', response.status); // Log the response status
 
       if (!response.ok) {
