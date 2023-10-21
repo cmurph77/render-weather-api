@@ -2,6 +2,7 @@ const { json } = require("express");
 
 const apiKey = '9d54b4134840423050e9a3f21b40dc15'; // Replace with your OpenWeatherMap API key
 
+
 function getCityLatLon(city) {
   return fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=${apiKey}`)
     .then((res) => res.json())

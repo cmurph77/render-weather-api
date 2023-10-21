@@ -91,6 +91,7 @@ app.get('/sample', async (req, res) => {
     const reply = {
       message :  'great success'
     }
+    console.log("RECIEVED SAMPLE DATA REQUEST")
     
     res.send(sample_data);
   } 
