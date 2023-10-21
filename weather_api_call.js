@@ -7,11 +7,6 @@ async function getWeatherForecastDaily(city) {
 
   // get the coords for the city in question
   const coords = await getCityLatLonNew(city)
-  
-  // const coords = {
-  //   "lon": -6.1003,
-  //   "lat": 53.2783
-  // };
   const lat = coords.lat;
   const lon = coords.lon;
   const country = coords.country;
@@ -105,11 +100,11 @@ function createForcastObj(raw_data){
     days[`day_${i}`] = {
         "unix_dt": raw_data.daily[i - 1].dt, // TODO -> convert this into a presentable date format
         "formated_date" : "Incomplete ",
-       //"temp": raw_data.daily[i - 1].main.temp,
-       //"windspeed": raw_data.daily[i - 1].wind.speed,
-       //"weather-type": raw_data.daily[i - 1].weather.main,
-       //"weather-description": raw_data.daily[i - 1].weather.description,
-       // "rain": raw_data.daily[i - 1].rain
+        //"temp": raw_data.daily[i - 1].main.temp,
+        "rainfall_level": raw_data.daily[i - 1].rain,
+        "windspeed": raw_data.daily[i - 1].wind_speed,
+       "weather-type": "unknown",
+       "wear_mask" : null
     };
   }
   forecast.days = days;
