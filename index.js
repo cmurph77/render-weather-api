@@ -99,20 +99,21 @@ app.get('/sample', async (req, res) => {
   }
 });
 
-app.get('/weather/:input', async (req, res) => {
-  const input = req.params.input;
-  console.log("\nReceived weather forecast request for City:");
-  console.log(input);
+// app.get('/weather/:input', async (req, res) => {
+//   const input = req.params.input;
+//   console.log("\nReceived weather forecast request for City:");
+//   console.log(input);
 
-  try {
-    const result = await getdata(input);  // Await the asynchronous function
-    //console.log(JSON.stringify(result, null, 4));
-    res.send(result);  // Use res.json to send JSON response
-  } 
-  catch (error) {
-    res.status(500).json({ error: 'Error fetching weather data' });
-  }
-});
+//   try {
+//     const result = await getdata(input);  // Await the asynchronous function
+//     //console.log(JSON.stringify(result, null, 4));
+//     res.send(result);  // Use res.json to send JSON response
+//   } 
+//   catch (error) {
+//     res.status(500).json({ error: 'Error fetching weather data' });
+//   }
+// });
+
 app.listen(PORT, () => {
   console.log(`server started on port ${PORT}`);
 });
