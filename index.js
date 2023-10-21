@@ -105,6 +105,21 @@ app.get('/sample', async (req, res) => {
   }
 });
 
+app.get('/sample/:input', async (req, res) => {
+  const input = req.params.input;
+  try {
+    const reply = {
+      message :  'great success'
+    }
+    console.log("RECIEVED SAMPLE DATA REQUEST")
+    sample_data.city = input;
+    res.send(sample_data);
+  } 
+  catch (error) {
+    res.status(400).send('Error while getting list of repositories');
+  }
+});
+
 app.get('/weather/:input', async (req, res) => {
   const input = req.params.input;
   console.log("\nReceived weather forecast request for City:");
