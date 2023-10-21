@@ -84,7 +84,7 @@ function createForcastObj(raw_data){
     days[`day_${i}`] = {
         "unix_dt": raw_data.daily[i - 1].dt, // TODO -> convert this into a presentable date format
         "formated_date" : "Incomplete ",
-        //"temp": raw_data.daily[i - 1].main.temp,
+        "temp": raw_data.daily[i - 1].temp.day,
         "rainfall_level": raw_data.daily[i - 1].rain,
         "windspeed": raw_data.daily[i - 1].wind_speed,
        "weather_type": "unknown",
