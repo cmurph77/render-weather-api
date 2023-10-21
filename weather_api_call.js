@@ -67,22 +67,6 @@ async function getCityLatLonNew(city) {
   }
 }
 
-// this function finds the coordinates of a city via an api call to owp api
-function getCityLatLon(city) {
-  //const fetch = await import('node-fetch'); // Use dynamic import
-
-  return fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=${apiKey}`)
-    .then((res) => res.json())
-    .then((result) => {
-        //console.log(JSON.stringify(result, null, 3));
-      const coords = {
-        lat: result.coord.lat,
-        lon: result.coord.lon,
-        country: result.sys.country
-      };
-      return coords;
-    });
-}
 
 // cleand up the forecast data
 function createForcastObj(raw_data){
@@ -103,7 +87,7 @@ function createForcastObj(raw_data){
         //"temp": raw_data.daily[i - 1].main.temp,
         "rainfall_level": raw_data.daily[i - 1].rain,
         "windspeed": raw_data.daily[i - 1].wind_speed,
-       "weather-type": "unknown",
+       "weather_type": "",
        "wear_mask" : null
     };
   }
