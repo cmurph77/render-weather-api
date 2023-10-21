@@ -99,6 +99,12 @@ function createForcastObj(raw_data){
 
 }
 
+/**
+ * @brief - This function returns the category that the temperature falls into COLD, MILD or HOT
+ * 
+ * @param {*} temp - The temperature to categorize. 
+ * @returns The category that the temperature falls into COLD, MILD or HOT
+ */
 function getCategorization(temp){
   if(temp<13){
       return 'COLD'
@@ -109,6 +115,13 @@ function getCategorization(temp){
   }
 }
 
+/**
+ * @brief Converts the unix timestamp into a user readable data format
+ * 
+ * @param {} unixTimestamp this is the unix timestamp 
+ * 
+ * @returns timestamp in the form DATE - DAY - MONTH
+ */
 function unixTimeToReadableDate(unixTimestamp) {
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
