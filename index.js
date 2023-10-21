@@ -3,6 +3,9 @@ const axios = require('axios');
 const app = express();
 const PORT = process.env.PORT || 8081;
 
+const { getWeatherForecastDaily } = require('./weather_api_call.js');
+
+
 const sample_data= {
   "city": "Sample Data City",
   "lon": 1000,
@@ -58,7 +61,16 @@ const sample_data= {
            
 
 
-
+async function getdata(city) {
+  try {
+    const result = await getWeatherForecastDaily(city);
+    // console.log(JSON.stringify(result, null, 4));
+    return result;
+  } catch (error) {
+    console.error('Error fetching weather data:', error);
+    throw error;  // Rethrow the error to be caught by the caller
+  }
+}
 
 app.get('/', async (req, res) => {
   const username = req.query.username || 'myogeshchavan97';
@@ -79,14 +91,13 @@ app.get('/weather/:input', async (req, res) => {
   console.log(input);
 
   try {
-    
-    //sample_data.city = input
-    res.send(sample_data);
+    const result = await getdata(input);  // Await the asynchronous function
+    //console.log(JSON.stringify(result, null, 4));
+    res.json(result);  // Use res.json to send JSON response
   } catch (error) {
-    res.status(400).send('Error while getting list of repositories');
+    res.status(500).json({ error: 'Error fetching weather data' });
   }
 });
-
 app.listen(PORT, () => {
   console.log(`server started on port ${PORT}`);
 });
