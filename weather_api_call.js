@@ -82,9 +82,10 @@ function createForcastObj(raw_data){
   // populate the forcast data points for the next 6 days. ( today + next 5)
   for (let i = 1; i <= 6; i++) {
     const type = getCategorization(raw_data.daily[i - 1].temp.day)
+    const date = unixTimeToReadableDate(raw_data.daily[i - 1].dt)
     days[`day_${i}`] = {
         "unix_dt": raw_data.daily[i - 1].dt, // TODO -> convert this into a presentable date format
-        "formated_date" : "Incomplete ",
+        "formated_date" : date,
         "temp": raw_data.daily[i - 1].temp.day,
         "rainfall_level": raw_data.daily[i - 1].rain,
         "windspeed": raw_data.daily[i - 1].wind_speed,
@@ -106,6 +107,21 @@ function getCategorization(temp){
   } else if(temp>13){
       return 'HOT'
   }
+}
+
+function unixTimeToReadableDate(unixTimestamp) {
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+  const timestampInMilliseconds = unixTimestamp * 1000;
+  const date = new Date(timestampInMilliseconds);
+
+  const dayOfWeek = daysOfWeek[date.getDay()];
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${dayOfWeek}, ${day} ${month} ${year}`;
 }
 
 module.exports = { getWeatherForecastDaily }
