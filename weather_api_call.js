@@ -81,13 +81,14 @@ function createForcastObj(raw_data){
 
   // populate the forcast data points for the next 6 days. ( today + next 5)
   for (let i = 1; i <= 6; i++) {
+    const type = getCategorization(raw_data.daily[i - 1].temp.day)
     days[`day_${i}`] = {
         "unix_dt": raw_data.daily[i - 1].dt, // TODO -> convert this into a presentable date format
         "formated_date" : "Incomplete ",
         "temp": raw_data.daily[i - 1].temp.day,
         "rainfall_level": raw_data.daily[i - 1].rain,
         "windspeed": raw_data.daily[i - 1].wind_speed,
-       "weather_type": "unknown",
+       "weather_type": type,
        "wear_mask" : null
     };
   }
@@ -95,6 +96,16 @@ function createForcastObj(raw_data){
 
   return forecast;
 
+}
+
+function getCategorization(temp){
+  if(temp<13){
+      return 'COLD'
+  }else if(temp>=13 && temp <=23) {
+      return 'MILD'
+  } else if(temp>13){
+      return 'HOT'
+  }
 }
 
 module.exports = { getWeatherForecastDaily }
