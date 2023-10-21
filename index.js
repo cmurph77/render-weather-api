@@ -1,4 +1,6 @@
 const express = require('express');
+const fetch = require('node-fetch');
+
 const { json } = require('body-parser');
 const cors = require('cors'); // Import the cors middleware
 const { getWeatherForecastDaily } = require('./weather_api_call.js');
@@ -78,7 +80,6 @@ async function getdata(city) {
 }
 
 app.get('/', async (req, res) => {
-  const username = req.query.username || 'myogeshchavan97';
   try {
     const reply = {
       message :  'great success'
@@ -118,25 +119,10 @@ app.get('/sample/:input', async (req, res) => {
   }
 });
 
-app.get('/sample/:input', async (req, res) => {
-  const input = req.params.input;
-  try {
-
-    console.log("RECIEVED SAMPLE DATA REQUEST")
-    sample_data.city = input;
-    res.send(sample_data);
-  } 
-  catch (error) {
-    res.status(400).send('Error while fetching data');
-  }
-});
 
 app.get('/owm/:input', async (req, res) => { 
-
-
   const input = req.params.input;  
     console.log("\nRECEIVED WEATHER REQUEST FOR: ",input);
-
   const lat = 53.2783
   const lon = -6.1003
   const apiKey = '9d54b4134840423050e9a3f21b40dc15'; // Replace with your OpenWeatherMap API key
@@ -152,7 +138,7 @@ app.get('/owm/:input', async (req, res) => {
       }
 
     forecastData = await response.json();
-    console.log(forecastData)
+    //console.log(forecastData)
     } 
     catch (error) {
       console.error('Error fetching weather forecast data:', error);

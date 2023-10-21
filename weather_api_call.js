@@ -39,7 +39,6 @@ async function getWeatherForecastDaily(city) {
 
   // return the data
   return cleaned_data;
-
 }
 
 // this function finds the coordinates of a city via an api call to owp api
