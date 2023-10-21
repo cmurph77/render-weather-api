@@ -6,7 +6,11 @@ async function getWeatherForecastDaily(city) {
 
 
   // get the coords for the city in question
-  const coords = await getCityLatLon(city)
+  //const coords = await getCityLatLon(city)
+  const coords = {
+    "lon": -6.1003,
+	  "lat": 53.2783
+  }
   const lat = coords.lat;
   const lon = coords.lon;
   const country = coords.country;
@@ -17,7 +21,8 @@ async function getWeatherForecastDaily(city) {
   let forecastData;
 
   try {
-    const response = await fetch(apiUrl);
+    const fetch = await import('node-fetch'); // Use dynamic import
+    const response = await fetch.default(apiUrl); // Use .default to access the imported module
     console.log('Response Status:', response.status); // Log the response status
 
     if (!response.ok) {
@@ -43,6 +48,8 @@ async function getWeatherForecastDaily(city) {
 
 // this function finds the coordinates of a city via an api call to owp api
 function getCityLatLon(city) {
+  //const fetch = await import('node-fetch'); // Use dynamic import
+
   return fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=${apiKey}`)
     .then((res) => res.json())
     .then((result) => {
