@@ -108,31 +108,62 @@ app.get('/sample', async (req, res) => {
 app.get('/sample/:input', async (req, res) => {
   const input = req.params.input;
   try {
-    const reply = {
-      message :  'great success'
-    }
+
     console.log("RECIEVED SAMPLE DATA REQUEST")
     sample_data.city = input;
     res.send(sample_data);
   } 
   catch (error) {
-    res.status(400).send('Error while getting list of repositories');
+    res.status(400).send('Error while fetching data');
   }
 });
 
-app.get('/weather/:input', async (req, res) => {
+app.get('/sample/:input', async (req, res) => {
   const input = req.params.input;
-  console.log("\nReceived weather forecast request for City:");
-  console.log(input);
-
   try {
-    const result = await getdata(input);  // Await the asynchronous function
-    //console.log(JSON.stringify(result, null, 4));
-    res.send(result);  // Use res.json to send JSON response
+
+    console.log("RECIEVED SAMPLE DATA REQUEST")
+    sample_data.city = input;
+    res.send(sample_data);
   } 
   catch (error) {
-    res.status(500).json({ error: 'Error fetching weather data' });
+    res.status(400).send('Error while fetching data');
   }
+});
+
+app.get('/owm/:input', async (req, res) => { 
+
+
+  const input = req.params.input;  
+    console.log("\nRECEIVED WEATHER REQUEST FOR: ",input);
+
+  const lat = 53.2783
+  const lon = -6.1003
+  const apiKey = '9d54b4134840423050e9a3f21b40dc15'; // Replace with your OpenWeatherMap API key
+  const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,hourly,minutely,alerts&units=metric&appid=${apiKey}`;
+  try {
+    // call the api
+    try {
+      const response = await fetch(apiUrl);
+      console.log('Response Status:', response.status); // Log the response status
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+    forecastData = await response.json();
+    console.log(forecastData)
+    } 
+    catch (error) {
+      console.error('Error fetching weather forecast data:', error);
+    }
+    res.send(forecastData);
+  } 
+  catch (error) {
+    res.status(400).send('Error while fetching data');
+  }
+
+
 });
 
 app.listen(PORT, () => {
