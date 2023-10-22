@@ -32,7 +32,6 @@ async function getWeatherForecastDaily(city) {
     }
 
   forecastData = await response.json();
-  //console.log(forecastData)
   } 
   catch (error) {
     console.error('Error fetching weather forecast data:', error);
@@ -99,7 +98,7 @@ function createForcastObj(raw_data){
     const rainfall_level = raw_data.daily[i - 1].rain;
     const bring_umbrella = rainfall_level && rainfall_level > 0; // Check if rainfall_level is present and greater than 0
     days[`day_${i}`] = {
-        "unix_dt": raw_data.daily[i - 1].dt, // TODO -> convert this into a presentable date format
+        "unix_dt": raw_data.daily[i - 1].dt,
         "formated_date" : date,
         "temp": raw_data.daily[i - 1].temp.day,
         "rainfall_level": rainfall_level,
