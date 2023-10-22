@@ -1,3 +1,15 @@
+const express = require('express');  //import express to create api endpoints
+
+//const { json } = require('body-parser');
+const cors = require('cors'); // Import the cors middleware
+const { getWeatherForecastDaily } = require('./weather_api_call.js'); // import js file that handled retrieving weather data
+
+const app = express();
+const PORT = process.env.PORT || 8081;  // expose the port for the api to listen on
+
+app.use(cors()); // enable CORS for all routes
+
+
 async function getPolution(lat, lon) {
   try {
     const fetchModule = await import('node-fetch');
@@ -13,6 +25,8 @@ async function getPolution(lat, lon) {
     const data = await response.json();
     console.log(JSON.stringify(data, 0, 3));
     const coValue = data['list'][0]['components']['co'];
+    const pm2 = data['list'][0]['components']['pm2_5'];
+
     return coValue;
   } catch (error) {
     throw error;
