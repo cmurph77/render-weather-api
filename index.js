@@ -122,12 +122,15 @@ async function getdata(city) {
 //   }
 // });
 
+/**
+ * @brief rerturns the current polution data for a lat and long
+ */
 app.get('/polution/:lat/:lon', async (req, res) => { 
   const lat = req.params.lat;  
   const lon = req.params.lon;  
   console.log("\nRECEIVED POLUTION REQUEST FOR : ( ",lat, ", ", lon, ")");
 
-  const apiKey = '9d54b4134840423050e9a3f21b40dc15'; // Replace with your OpenWeatherMap API key
+  const apiKey = '9d54b4134840423050e9a3f21b40dc15'; //OpenWeatherMap API key
   const apiUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`;
   try {
     // call the api
@@ -162,6 +165,7 @@ app.get('/polution/:lat/:lon', async (req, res) => {
 
  });
 
+ 
 /**
  * @brief This is a GET enpoint that takes the city name as an input and return the weather data for the city
  */
